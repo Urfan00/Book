@@ -24,7 +24,10 @@ def story(request):
 
     return render(request, 'story.html', context)
 
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def story_detail(request, id):
 
     story = Story.objects.filter(id=id, category__is_active = True).first()

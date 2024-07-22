@@ -30,8 +30,6 @@ def contact(request):
 
     if request.method == 'POST':
 
-        request.GET
-        request.POST
         forms = ContactFormModel(data=request.POST)
 
         if forms.is_valid():
