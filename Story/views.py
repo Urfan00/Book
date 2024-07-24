@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
 from .models import Category, Story, Tag
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
 
 
 def story(request):
@@ -24,7 +26,31 @@ def story(request):
 
     return render(request, 'story.html', context)
 
-from django.contrib.auth.decorators import login_required
+
+class StoryList(ListView):
+    model = Story
+    template_name = 'story.html'
+    context_object_name = 'stories'
+    paginate_by = 1
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["categories"] = Category.objects.exclude(is_active=False).all()
+
+        return context
+
+    def get_queryset(self):
+
+        category = self.request.GET.get('category')
+
+        if category:
+            self.queryset = Story.objects.filter(category__id=category, category__is_active=True, show_date__lte=datetime.date(datetime.now())).all()
+        else:
+            self.queryset = Story.objects.filter(category__is_active=True, show_date__lte=datetime.date(datetime.now())).all()
+
+        return super().get_queryset()
+    
 
 
 @login_required

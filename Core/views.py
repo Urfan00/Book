@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render
 from Core.forms import ContactFormModel
 from Core.models import Contact, Slider
 from django.contrib import messages
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
 
 def index(request):
@@ -23,7 +25,6 @@ def about(request):
 def user_profile(request):
     return render(request, 'user-profile.html')
 
-
 def contact(request):
 
     forms = ContactFormModel()
@@ -43,3 +44,14 @@ def contact(request):
     }
 
     return render(request, 'contact.html', context)
+
+
+class ContactView(CreateView):
+    template_name = 'contact.html'
+    form_class = ContactFormModel
+    success_url = reverse_lazy('contact')
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'form submit oldu')
+        return super().form_valid(form)
