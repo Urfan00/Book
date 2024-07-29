@@ -51,3 +51,19 @@ class Story(models.Model):
         verbose_name_plural = 'Stories'
 
 
+class StoryComment(models.Model):
+    message = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Story Comment'
+        verbose_name_plural = 'Story Comment'
+
+

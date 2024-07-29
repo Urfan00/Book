@@ -7,7 +7,7 @@ class AccountAdmin(BaseUserAdmin):
     list_display = ['id', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_superuser']
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'bio', 'phone')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'bio', 'phone', 'image')}),
         ('Permissions', {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
