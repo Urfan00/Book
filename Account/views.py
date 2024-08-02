@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from Account.models import Account
-from .forms import LoginForm, RegistrationFormModel
-from django.contrib.auth.views import LoginView
+from .forms import ChangePasswordForm, LoginForm, RegistrationFormModel
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -120,4 +120,9 @@ def register_view(request):
 
     return render(request, 'accounts/register.html', context)
 
+
+class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
+    template_name='accounts/change_password.html'
+    form_class= ChangePasswordForm
+    success_url = reverse_lazy('login')
 

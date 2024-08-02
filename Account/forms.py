@@ -1,7 +1,7 @@
 from django import forms
 from Account.models import Account
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import AuthenticationForm, UsernameField, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UsernameField, UserCreationForm, PasswordChangeForm
 
 
 class LoginForm(AuthenticationForm):
@@ -73,3 +73,24 @@ class RegistrationFormModel(UserCreationForm):
                 }
             )
         }
+
+
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(required=True, label='Old Password',
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Your Old Password'
+            }))
+    new_password1 = forms.CharField(required=True, label='New Password',
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Your New Password'
+            }))
+    new_password2 = forms.CharField(required=True, label='Confirm New Password',
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Confirm Your New Password'
+            }))
