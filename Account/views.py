@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from Account.models import Account
-from .forms import ChangePasswordForm, LoginForm, RegistrationFormModel
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from .forms import ChangePasswordForm, CustomSetPasswordForm, LoginForm, RegistrationFormModel, ResetPasswordForm
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -126,3 +126,21 @@ class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class= ChangePasswordForm
     success_url = reverse_lazy('login')
 
+
+class ResetPasswordView(PasswordResetView):
+    template_name = 'accounts/forget_password.html'
+    form_class = ResetPasswordForm
+    email_template_name = 'accounts/reset_password_email.html'
+    subject_template_name = 'accounts/reset_password_subject.txt'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      "If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+
+    success_url = reverse_lazy('login')
+
+
+class ResetPasswordConfirmView(PasswordResetConfirmView):
+    template_name='accounts/reset_password_confirm.html'
+    form_class=CustomSetPasswordForm
+    success_url = reverse_lazy('reset_password_complete')
