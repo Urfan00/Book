@@ -7,7 +7,7 @@ class Recipes(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to='Recipe')
     content = models.TextField()
-    show_date = models.DateField()
+    show_date = models.DateField(null=True)
 
     tag = models.ManyToManyField(Tag)
     user = models.ForeignKey(Account, on_delete=models.CASCADE)

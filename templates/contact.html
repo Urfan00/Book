@@ -21,7 +21,7 @@
         <div class="container">
             <div class="row block-9">
                 <div class="col-md-6 order-md-last d-flex">
-                    <form method="post" class="bg-light p-5 contact-form">
+                    <form method="post" class="bg-light p-5 contact-form" enctype="multipart/form-data">
 
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">

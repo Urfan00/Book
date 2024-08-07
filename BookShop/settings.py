@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'Account',
     'Core',
     'Story',
-    'Recipe'
+    'Recipe',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
