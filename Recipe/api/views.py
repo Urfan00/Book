@@ -1,8 +1,21 @@
+import django_filters.rest_framework
+from rest_framework import filters
 from rest_framework.views import APIView
-from Recipe.api.serializers import RecipesCreateSerializers, RecipesReadSerializers
+from Recipe.api.serializers import CategorySeralizers, RecipesCreateSerializers, RecipesReadSerializers
 from Recipe.models import Recipes
 from rest_framework.response import Response
+from Story.models import Category
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
+
+class CategoryAPIView(APIView):
+
+    def get(self, request, *args, **kwargs):
+
+        categories = Category.objects.filter(is_active=True).all()
+        serializers = CategorySeralizers(categories, context = {'request': request}, many=True)
+        return Response(serializers.data)
 
 
 class RecipeAPI(APIView):
@@ -21,6 +34,33 @@ class RecipeAPI(APIView):
             serializers.save()
             return Response(serializers.data, status=201)
         return Response(serializers.errors, status=400)
+
+
+class GenericAPIViewSerializerMixin:
+    def get_serializer_class(self):
+        return self.serializer_classes[self.request.method]
+
+
+class RecipeListCreateAPI(GenericAPIViewSerializerMixin, ListCreateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['tag', 'user', 'category']
+    search_fields = ['title']
+    ordering_fields = ['id', 'created_at']
+    queryset = Recipes.objects.all()
+    serializer_classes = {
+        'GET' : RecipesReadSerializers,
+        'POST' : RecipesCreateSerializers
+    }
+
+
+class RecipeRetrieveUpdateDestroyAPI(GenericAPIViewSerializerMixin, RetrieveUpdateDestroyAPIView):
+    queryset = Recipes.objects.all()
+    serializer_classes = {
+        'GET' : RecipesReadSerializers,
+        'PUT' : RecipesCreateSerializers,
+        'PATCH' : RecipesCreateSerializers
+    }
 
 
 class RecipeReadUpdateDeleteView(APIView):

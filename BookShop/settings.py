@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Recipe',
 
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +155,7 @@ EMAIL_HOST_USER = 'urfanagazade1@gmail.com'  #urfan12345
 EMAIL_HOST_PASSWORD = 'vvcftefppbseouuf'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+# }

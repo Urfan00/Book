@@ -4,9 +4,16 @@ from Story.models import Category, Tag
 
 
 class CategorySeralizers(serializers.ModelSerializer):
+    # recipes = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = ['image', 'is_active']
+        # fields = ['id', 'name', 'image', 'is_active', 'recipes']
+        fields = ['id', 'name', 'image', 'is_active']
+
+    # def get_recipes(self, obj):
+    #     serializer = RecipesCreateSerializers(obj.recipe_category.all(), context=self.context, many=True)
+    #     return serializer.data
 
 
 class TagSeralizers(serializers.ModelSerializer):
