@@ -32,6 +32,13 @@ class RecipesReadSerializers(serializers.ModelSerializer):
 
 
 class RecipesCreateSerializers(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Recipes
         fields = ['id', 'title', 'image', 'category', 'tag', 'user']
+
+    def validate(self, attrs):
+        request = self.context['request']
+        attrs['user'] = request.user
+        return super().validate(attrs)
