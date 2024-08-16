@@ -1,6 +1,7 @@
 import django_filters.rest_framework
 from rest_framework import filters
 from rest_framework.views import APIView
+from Recipe.api.pagination import LargePageNumberPagination, SmallPageNumberPagination
 from Recipe.api.serializers import CategorySeralizers, RecipesCreateSerializers, RecipesReadSerializers
 from Recipe.models import Recipes
 from rest_framework.response import Response
@@ -43,6 +44,7 @@ class GenericAPIViewSerializerMixin:
 
 class RecipeListCreateAPI(GenericAPIViewSerializerMixin, ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
+    # pagination_class = LargePageNumberPagination
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['tag', 'user', 'category']
     search_fields = ['title']
