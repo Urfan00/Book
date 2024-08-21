@@ -1,0 +1,35 @@
+# Use postgres/example user/password credentials
+version: '3.9'
+
+services:
+
+  db:
+    container_name: postgresql_db
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/pgdb:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER : root
+      POSTGRES_PASSWORD : root123
+      POSTGRES_DB : Food-Story
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+
+  # pgadmin:
+  #   container_name: pgadmin_container
+  #   image: dpage/pgadmin4:7.1
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: "info@food.com"
+  #     PGADMIN_DEFAULT_PASSWORD: "food1234"
+  #   ports:
+  #     - 5050:80
+  #   volumes:
+  #      - ./data/pgadmin2:/var/lib/pgadmin
