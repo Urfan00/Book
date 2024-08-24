@@ -3,6 +3,16 @@ version: '3.9'
 
 services:
 
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
+    volumes:
+      - ./static/:/app/static/
+      - ./media/:/app/media/
+
   db:
     container_name: postgresql_db
     image: postgres
@@ -14,22 +24,26 @@ services:
     environment:
       POSTGRES_USER : root
       POSTGRES_PASSWORD : root123
-      POSTGRES_DB : Food-Story
+      POSTGRES_DB : food_story
 
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
+  web:
+    build: .
+    command: gunicorn BookShop.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./media:/app/media
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
 
-  # pgadmin:
-  #   container_name: pgadmin_container
-  #   image: dpage/pgadmin4:7.1
-  #   restart: always
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: "info@food.com"
-  #     PGADMIN_DEFAULT_PASSWORD: "food1234"
-  #   ports:
-  #     - 5050:80
-  #   volumes:
-  #      - ./data/pgadmin2:/var/lib/pgadmin
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:7.1
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "info@foodstory.com"
+      PGADMIN_DEFAULT_PASSWORD: "foodstory"
+    ports:
+      - 5050:80
+    volumes:
+       - ./data/pgadmin2:/var/lib/pgadmin
