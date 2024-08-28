@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework_simplejwt',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -94,10 +95,11 @@ WSGI_APPLICATION = 'BookShop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Food-Story',
-        'USER': 'postgres',
-        'PASSWORD': '123456789',
-        'HOST': 'localhost',
+        # 'NAME': 'Food-Story',
+        'NAME': 'food_story',
+        'USER': 'root',
+        'PASSWORD': 'root123',
+        'HOST': 'db',
         'PORT': '5432'
     }
 }
@@ -171,8 +173,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 
 #CELERY STUFF
-BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

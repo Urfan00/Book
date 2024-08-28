@@ -1,4 +1,5 @@
 from django.db import models
+from services.mixin import DateMixin
 
 
 class Slider(models.Model):
@@ -29,3 +30,15 @@ class Contact(models.Model):
     class Meta:
         verbose_name = 'Contact'
         verbose_name_plural = 'Contact'
+
+
+class Subscriber(DateMixin):
+    email = models.EmailField(max_length=200, unique=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'Subscriber'
+        verbose_name_plural = 'Subscriber'

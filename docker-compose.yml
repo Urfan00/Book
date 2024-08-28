@@ -3,15 +3,15 @@ version: '3.9'
 
 services:
 
-  # nginx:
-  #   build: ./nginx
-  #   ports:
-  #     - 80:80
-  #   depends_on:
-  #     - web
-  #   volumes:
-  #     - ./static/:/app/static/
-  #     - ./media/:/app/media/
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
+    volumes:
+      - ./static/:/app/static/
+      - ./media/:/app/media/
 
   redis:
     image: redis
@@ -27,28 +27,40 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER : postgres
-      POSTGRES_PASSWORD : 123456789
-      POSTGRES_DB : Food-Story
+      POSTGRES_USER : root
+      POSTGRES_PASSWORD : root123
+      POSTGRES_DB : food_story
 
-  # web:
-  #   build: .
-  #   command: gunicorn BookShop.wsgi:application --bind 0.0.0.0:8000
-  #   volumes:
-  #     - ./media:/app/media
-  #   ports:
-  #     - 8000:8000
-  #   depends_on:
-  #     - db
+  web:
+    build: .
+    command: gunicorn BookShop.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./media:/app/media
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
 
-  # pgadmin:
-  #   container_name: pgadmin_container
-  #   image: dpage/pgadmin4:7.1
-  #   restart: always
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: "info@foodstory.com"
-  #     PGADMIN_DEFAULT_PASSWORD: "foodstory"
-  #   ports:
-  #     - 5050:80
-  #   volumes:
-  #      - ./data/pgadmin2:/var/lib/pgadmin
+  celery:
+    build:
+      context: .
+      dockerfile: celery.dockerfile
+    command: celery -A BookShop worker --beat --scheduler django --loglevel=info
+    volumes:
+      - ./media:/app/media
+    depends_on:
+      - db
+      - redis
+    env_file: .env
+    
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:7.1
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "info@foodstory.com"
+      PGADMIN_DEFAULT_PASSWORD: "foodstory"
+    ports:
+      - 5050:80
+    volumes:
+       - ./data/pgadmin2:/var/lib/pgadmin
