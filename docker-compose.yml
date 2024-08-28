@@ -3,15 +3,20 @@ version: '3.9'
 
 services:
 
-  nginx:
-    build: ./nginx
+  # nginx:
+  #   build: ./nginx
+  #   ports:
+  #     - 80:80
+  #   depends_on:
+  #     - web
+  #   volumes:
+  #     - ./static/:/app/static/
+  #     - ./media/:/app/media/
+
+  redis:
+    image: redis
     ports:
-      - 80:80
-    depends_on:
-      - web
-    volumes:
-      - ./static/:/app/static/
-      - ./media/:/app/media/
+      - 6379:6379
 
   db:
     container_name: postgresql_db
@@ -22,28 +27,28 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER : root
-      POSTGRES_PASSWORD : root123
-      POSTGRES_DB : food_story
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : 123456789
+      POSTGRES_DB : Food-Story
 
-  web:
-    build: .
-    command: gunicorn BookShop.wsgi:application --bind 0.0.0.0:8000
-    volumes:
-      - ./media:/app/media
-    ports:
-      - 8000:8000
-    depends_on:
-      - db
+  # web:
+  #   build: .
+  #   command: gunicorn BookShop.wsgi:application --bind 0.0.0.0:8000
+  #   volumes:
+  #     - ./media:/app/media
+  #   ports:
+  #     - 8000:8000
+  #   depends_on:
+  #     - db
 
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4:7.1
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "info@foodstory.com"
-      PGADMIN_DEFAULT_PASSWORD: "foodstory"
-    ports:
-      - 5050:80
-    volumes:
-       - ./data/pgadmin2:/var/lib/pgadmin
+  # pgadmin:
+  #   container_name: pgadmin_container
+  #   image: dpage/pgadmin4:7.1
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: "info@foodstory.com"
+  #     PGADMIN_DEFAULT_PASSWORD: "foodstory"
+  #   ports:
+  #     - 5050:80
+  #   volumes:
+  #      - ./data/pgadmin2:/var/lib/pgadmin

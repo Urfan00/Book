@@ -1,9 +1,12 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from Core.forms import ContactFormModel
 from Core.models import Contact, Slider
 from django.contrib import messages
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
+
+from Core.tasks import export
 
 
 def index(request):
@@ -52,3 +55,10 @@ class ContactView(CreateView):
         form.save()
         messages.success(self.request, 'form submit oldu')
         return super().form_valid(form)
+
+
+def export_view(request):
+    print('here')
+    export.delay()
+    print('here 2')
+    return HttpResponse('<h1>Export edildi !!!</h1>')
