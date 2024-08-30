@@ -51,7 +51,7 @@ services:
     depends_on:
       - db
       - redis
-    env_file: .env
+    # env_file: .env
     
   pgadmin:
     container_name: pgadmin_container
