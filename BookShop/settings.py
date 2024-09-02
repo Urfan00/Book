@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+from BookShop.jazzmin import JAZZMIN_SETTINGS, JAZZMIN_UI_TWEAKS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +34,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -95,11 +98,14 @@ WSGI_APPLICATION = 'BookShop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'Food-Story',
-        'NAME': 'food_story',
-        'USER': 'root',
-        'PASSWORD': 'root123',
-        'HOST': 'db',
+        'NAME': 'Food-Story',
+        # 'NAME': 'food_story',
+        # 'USER': 'root',
+        # 'PASSWORD': 'root123',
+        # 'HOST': 'db',
+        'USER': 'postgres',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }
@@ -235,3 +241,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
+JAZZMIN_UI_TWEAKS = JAZZMIN_UI_TWEAKS
