@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,15 +46,33 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item active"><a href="{% url 'about' %}" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="{% url 'story_list' %}" class="nav-link">Stories</a></li>
-                <li class="nav-item"><a href="{% url 'recipe_list' %}" class="nav-link">Recipes</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="index.html" class="nav-link">{% trans "Home" %}</a></li>
+                <li class="nav-item active"><a href="{% url 'about' %}" class="nav-link">{% trans "About" %}</a></li>
+                <li class="nav-item"><a href="{% url 'story_list' %}" class="nav-link">{% trans "Stories" %}</a></li>
+                <li class="nav-item"><a href="{% url 'recipe_list' %}" class="nav-link">{% trans "Recipes" %}</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">{% trans "Contact" %}</a></li>
+
+                {% get_current_language as CURRENT_LANGUAGE %}
+                {% get_available_languages as AVAILABLE_LANGUAGES %}
+                {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+
+                <div class="languages">
+                    <ul class="languages">
+                        {% for language in languages %}
+                        <li>
+                            <a href="/{{ language.code }}/"
+                            {% if language.code == CURRENT_LANGUAGE %} class="active"{% endif %}>
+                            {{ language.name_local }} {{ language.code }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}" class="btn btn-black px-3 px-md-4 py-3">Log Out</a></li>
+                    <li><a href="{% url 'logout' %}" class="btn btn-black px-3 px-md-4 py-3">{% trans "Log Out" %}</a></li>
                 {% else %}
-                    <li><a href="{% url 'login' %}" class="btn btn-black px-3 px-md-4 py-3">Log In</a></li>
+                    <li><a href="{% url 'login' %}" class="btn btn-black px-3 px-md-4 py-3">{% trans "Log In" %}</a></li>
                 {% endif %}
             </ul>
         </div>

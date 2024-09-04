@@ -18,17 +18,23 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
 
 
 urlpatterns = [
+    path("i18n/", include("django.conf.urls.i18n")),
     path('admin/', admin.site.urls),
-    path('', include('Core.urls')),
-    path('', include('Story.urls')),
-    path('', include('Account.urls')),
-    path('', include('Recipe.urls')),
 
     path('api/', include('Recipe.api.urls')),
     path('api/', include('Core.api.urls')),
     path('api/', include('Account.api.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+urlpatterns += i18n_patterns(
+    path('', include('Core.urls')),
+    path('', include('Story.urls')),
+    path('', include('Account.urls')),
+    path('', include('Recipe.urls')),
+)
