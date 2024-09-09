@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'jazzmin',
 
     'django.contrib.admin',
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_celery_beat',
     'import_export',
+    'rosetta',
 
 ]
 
@@ -150,8 +152,8 @@ LOCALE_PATHS = (
 )
 
 LANGUAGES = (
-    ('az', 'Azerbaijani'),
     ('en', 'English'),
+    ('az', 'Azerbaijani'),
     ('ru', 'Russian'),
 )
 

@@ -1,9 +1,16 @@
 from django.contrib import admin
 from Core.models import Contact, Slider, Subscriber
 from import_export.admin import ImportExportModelAdmin
+from modeltranslation.admin import TranslationAdmin
 
 
-class SliderAdmin(ImportExportModelAdmin):
+class SliderAdmin(ImportExportModelAdmin, TranslationAdmin):
+    fieldsets = (
+        ('EN', {'fields': ('title_en', 'description_en')}),  # English fields
+        ('AZ', {'fields': ('title_az', 'description_az')}),  # Azerbaijani fields
+        ('RU', {'fields': ('title_ru', 'description_ru')}),  # Russian fields
+        ('Additional', {'fields': ('image', )}),  # Non-translated fields
+    )
     list_display = ['id', 'title', 'image', 'description']
     list_display_links = ['id', 'title']
     search_fields = ['title']

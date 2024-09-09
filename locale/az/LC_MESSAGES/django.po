@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-04 20:50+0400\n"
+"POT-Creation-Date: 2024-09-09 20:37+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\Core\models.py:7
+msgid "Title"
+msgstr "Başlıq"
+
+#: .\Core\models.py:8
+msgid "Image"
+msgstr "Şəkil"
+
+#: .\Core\models.py:9
+msgid "Description"
+msgstr "Məzmun"
+
+#: .\Core\models.py:15
+msgid "Slider"
+msgstr "AzSlider"
+
+#: .\Core\models.py:16
+msgid "Sliders"
+msgstr "AzSliders"
+
 #: .\templates\base.html:49
 msgid "Home"
 msgstr "Ana Səhifə"
@@ -37,10 +58,10 @@ msgstr "Reseptlər"
 msgid "Contact"
 msgstr "Əlaqə"
 
-#: .\templates\base.html:55
+#: .\templates\base.html:73
 msgid "Log Out"
 msgstr "Çıxış"
 
-#: .\templates\base.html:57
+#: .\templates\base.html:75
 msgid "Log In"
 msgstr "Daxil ol"
