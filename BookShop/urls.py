@@ -37,6 +37,7 @@ urlpatterns += i18n_patterns(
     path('', include('Story.urls')),
     path('', include('Account.urls')),
     path('', include('Recipe.urls')),
+    path('', include('Order.urls')),
 )
 
 

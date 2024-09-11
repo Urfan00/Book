@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'Core',
     'Story',
     'Recipe',
+    'Order',
 
     'rest_framework',
     'django_filters',
