@@ -22,7 +22,7 @@ class Basket(DateMixin):
     status = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.get_full_name()
+        return f"{self.user.get_full_name()} - {self.pk}"
 
     class Meta:
         verbose_name = 'Basket'
@@ -30,9 +30,9 @@ class Basket(DateMixin):
 
 
 class BasketItem(DateMixin):
-    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
-    price = models.FloatField()
-    count = models.PositiveIntegerField()
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE, related_name="basket_items")
+    price = models.FloatField(default=0)
+    count = models.PositiveIntegerField(default=0)
     product = models.ForeignKey(Recipes, on_delete=models.CASCADE)
 
     def __str__(self):
